@@ -39,15 +39,15 @@ class GetMail
     row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
 
     decoded_body = NKF.nkf('-w', row_body)
- #   body = body_to_pobody(decoded_body)
-   body = mail.body.decoded.encode("UTF-8", mail.charset)
-    body.sub(/白土/,"XXX")
-    body.sub(/光/,"XXX")
+    body = body_to_pobody(decoded_body)
+ #  body = mail.body.decoded.encode("UTF-8", mail.charset)
+    body = body.sub(/白土光/,"XXX")
+ #   body.sub(/光/,"XXX")
 
     #subject = mail.subject.split('gbpjpy')
     #body = "#{subject[1]}\n ``` #{body}```"
     
-    Slack.chat_postMessage(text: body, channe: '#slacktest', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channel: '#slacktest', username: '志摩力男')
     
   end
 
