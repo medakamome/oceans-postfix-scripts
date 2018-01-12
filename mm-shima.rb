@@ -15,7 +15,7 @@ class GetMail
 
  def execute
     Slack.configure do |config|
-      config.token = ''
+      config.token = 'xoxp-288774156885-289496027958-297279289409-62e31333077cf2fbe57d501021269742'
     end
 
     mail = Mail.new($stdin.read)
