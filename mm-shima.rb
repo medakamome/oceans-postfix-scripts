@@ -10,19 +10,21 @@ require 'nkf'
 class GetMail
  def initialize
     dt = Time.now.strftime("%Y%m%d")
-    @out_file = "/home/user/postfix/#{dt}.log"
+    @out_file = "/home/postfix/log/#{dt}.log"
  end
 
  def execute
     Slack.configure do |config|
-      config.token = 'xoxb-292770457888-1vacmI8QqSH7xXNiT09iNAZi'
+      config.token = ''
     end
 
     mail = Mail.new($stdin.read)
-=begin
+#    stdin = $stdin.read
+#=begin
     begin
         open(@out_file, "w") do |f|
-            mail = Mail.new($stdin.read)
+#            mail = Mail.new($stdin.read)
+#             f.puts "stdin:   #{mail}"
             f.puts "From:    #{mail.from.first}"
             f.puts "To:      #{mail.to.first}"
             f.puts "Date:    #{mail.date}"
@@ -32,20 +34,20 @@ class GetMail
     rescue => e
         exit 1
     end
-=end
+#=end
 
     row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
 
     decoded_body = NKF.nkf('-w', row_body)
-    body = body_to_pobody(decoded_body)
-
+ #   body = body_to_pobody(decoded_body)
+   body = mail.body.decoded.encode("UTF-8", mail.charset)
     body.sub(/白土/,"XXX")
     body.sub(/光/,"XXX")
 
     #subject = mail.subject.split('gbpjpy')
     #body = "#{subject[1]}\n ``` #{body}```"
     
-    Slack.chat_postMessage(text: body, channel: '#slacktest', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channe: '#slacktest', username: '志摩力男')
     
   end
 
