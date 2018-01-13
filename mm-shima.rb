@@ -47,7 +47,7 @@ class GetMail
     #subject = mail.subject.split('gbpjpy')
     #body = "#{subject[1]}\n ``` #{body}```"
     
-    Slack.chat_postMessage(text: body, channel: '#slacktest', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channel: '#devpost', username: '志摩力男')
     
   end
 
