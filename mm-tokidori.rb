@@ -3,6 +3,8 @@
 #-------------------------------------------------
 # Ruby script to get a mail via alias of postfix.
 #-------------------------------------------------
+require 'rubygems'
+require 'json'
 require 'mail'
 require 'slack'
 require 'nkf'
@@ -11,17 +13,24 @@ class GetMail
  def initialize
     dt = Time.now.strftime("%Y%m%d")
     @out_file = "/home/postfix/log/#{dt}.log"
+    File.open("/home/postfix/scripts/oceans-postfix-scripts/config.json") do |file|
+       @hash = JSON.load(file)
+    end
  end
 
  def execute
+ begin
     Slack.configure do |config|
-      config.token = 'xoxp-288774156885-289496027958-297279289409-62e31333077cf2fbe57d501021269742'
+       config.token = @hash['slack_token']
     end
+ end
 
     mail = Mail.new($stdin.read)
 =begin
     begin
         open(@out_file, "w") do |f|
+#             f.puts "stdin:   #{mail}"
+            f.puts "json:    #{@hash['slack_token']}"
             f.puts "From:    #{mail.from.first}"
             f.puts "To:      #{mail.to.first}"
             f.puts "Date:    #{mail.date}"
@@ -37,12 +46,10 @@ class GetMail
 
     decoded_body = NKF.nkf('-w', row_body)
     body = body_to_pobody(decoded_body)
+ #  body = mail.body.decoded.encode("UTF-8", mail.charset)
     body = body.sub(/白土光/,"XXX")
-
-    #subject = mail.subject.split('gbpjpy')
-    #body = "#{subject[1]}\n ``` #{body}```"
     
-    Slack.chat_postMessage(text: body, channel: '#devpost', username: '時鳥')
+    Slack.chat_postMessage(text: body, channel: '#devpost', username: '志摩力男')
     
   end
 
