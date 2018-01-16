@@ -49,7 +49,7 @@ class GetMail
  #  body = mail.body.decoded.encode("UTF-8", mail.charset)
     body = body.sub(/白土光/,"XXX")
     
-    Slack.chat_postMessage(text: body, channel: '#devpost', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channel: '#mailmagazine', username: '志摩力男')
     
   end
 

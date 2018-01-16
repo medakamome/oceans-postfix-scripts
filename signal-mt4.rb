@@ -10,12 +10,12 @@ require 'nkf'
 class GetMail
  def initialize
     dt = Time.now.strftime("%Y%m%d")
-    @out_file = "/home/user/postfix/#{dt}.log"
+    @out_file = "/home/postfix/log/#{dt}.log"
  end
 
  def execute
     Slack.configure do |config|
-      config.token = 'xoxb-292770457888-1vacmI8QqSH7xXNiT09iNAZi'
+      config.token = 'xoxp-288774156885-289496027958-298635768000-4d807da24f211f8908eb63f3aceff8a5'
     end
 
     mail = Mail.new($stdin.read)

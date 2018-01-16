@@ -23,10 +23,9 @@ class GetMail
     Slack.configure do |config|
        config.token = @hash['slack_token']
     end
- end
-
+end
     mail = Mail.new($stdin.read)
-=begin
+#=begin
     begin
         open(@out_file, "w") do |f|
 #             f.puts "stdin:   #{mail}"
@@ -40,16 +39,16 @@ class GetMail
     rescue => e
         exit 1
     end
-=end
+#=end
 
-    row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
+ #   row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
 
-    decoded_body = NKF.nkf('-w', row_body)
-    body = body_to_pobody(decoded_body)
- #  body = mail.body.decoded.encode("UTF-8", mail.charset)
-    body = body.sub(/白土光/,"XXX")
+#    decoded_body = NKF.nkf('-w', row_body)
+ #   body = body_to_pobody(decoded_body)
+    body = mail.body.decoded.encode("UTF-8", mail.charset)
+    body = body.sub(/加藤　高正/,"XXX")
     
-    Slack.chat_postMessage(text: body, channel: '#devpost', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channel: '#devpost', username: 'にっしー')
     
   end
 
