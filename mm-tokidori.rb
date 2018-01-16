@@ -19,11 +19,9 @@ class GetMail
  end
 
  def execute
- begin
     Slack.configure do |config|
        config.token = @hash['slack_token']
     end
- end
 
     mail = Mail.new($stdin.read)
 =begin
@@ -49,7 +47,7 @@ class GetMail
  #  body = mail.body.decoded.encode("UTF-8", mail.charset)
     body = body.sub(/白土光/,"XXX")
     
-    Slack.chat_postMessage(text: body, channel: '#devpost', username: '志摩力男')
+    Slack.chat_postMessage(text: body, channel: '#devpost', username: '時鳥')
     
   end
 

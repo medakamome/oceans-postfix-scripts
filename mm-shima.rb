@@ -19,11 +19,9 @@ class GetMail
  end
 
  def execute
- begin
     Slack.configure do |config|
        config.token = @hash['slack_token']
     end
- end
 
     mail = Mail.new($stdin.read)
 =begin

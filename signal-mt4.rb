@@ -11,11 +11,14 @@ class GetMail
  def initialize
     dt = Time.now.strftime("%Y%m%d")
     @out_file = "/home/postfix/log/#{dt}.log"
+    File.open("/home/postfix/scripts/oceans-postfix-scripts/config.json") do |file|
+       @hash = JSON.load(file)
+    end
  end
 
  def execute
     Slack.configure do |config|
-      config.token = 'xoxp-288774156885-289496027958-298635768000-4d807da24f211f8908eb63f3aceff8a5'
+        config.token = @hash['slack_token']
     end
 
     mail = Mail.new($stdin.read)

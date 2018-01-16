@@ -1,3 +1,6 @@
 {
-    "slack_token": "xoxp-288774156885-289496027958-298635768000-4d807da24f211f8908eb63f3aceff8a5"
+    "slack_token": "xoxp-288774156885-289496027958-298635768000-4d807da24f211f8908eb63f3aceff8a5",
+    "mm-shima":{"hedear-row-count": 0, "footer-row-count": 0},
+    "mm-nishihara":{"hedear-row-count": 0, "footer-row-count": 0},
+    "mm-tokidori":{"hedear-row-count": 0, "footer-row-count": 0}
 }
