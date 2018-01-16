@@ -3,7 +3,9 @@
 #-------------------------------------------------
 # Ruby script to get a mail via alias of postfix.
 #-------------------------------------------------
+require 'rubygems'
 require 'mail'
+require 'json'
 require 'slack'
 require 'nkf'
 
@@ -48,7 +50,7 @@ class GetMail
 
     #subject = mail.subject.split('gbpjpy')
     #body = "#{subject[1]}\n ``` #{body}```"
-    #Slack.chat_postMessage(text: body, channel: '#slacktest', username: 'mt4alert')
+    #Slack.chat_postMessage(text: body, channel: '#devpost', username: 'mt4alert')
   end
 
   def body_to_pobody(body)

@@ -8,10 +8,12 @@ require 'json'
 require 'mail'
 require 'slack'
 require 'nkf'
+require 'logger'
 
 class GetMail
  def initialize
     dt = Time.now.strftime("%Y%m%d")
+#    @log = Logger.new('/home/postfix/log')
     @out_file = "/home/postfix/log/#{dt}.log"
     File.open("/home/postfix/scripts/oceans-postfix-scripts/config.json") do |file|
        @hash = JSON.load(file)
@@ -58,4 +60,8 @@ class GetMail
   end
 end
 
-GetMail.new.execute
+#begin
+  GetMail.new.execute
+#rescue => e
+#  exit 1
+#end
