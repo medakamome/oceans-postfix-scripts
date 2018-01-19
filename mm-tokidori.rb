@@ -8,6 +8,7 @@ require 'json'
 require 'mail'
 require 'slack'
 require 'nkf'
+require '/home/postfix/scripts/oceans-postfix-scripts/utils.rb'
 
 class GetMail
  def initialize
@@ -46,6 +47,9 @@ class GetMail
     body = body_to_pobody(decoded_body)
  #  body = mail.body.decoded.encode("UTF-8", mail.charset)
     
+    # フッター削除
+    body = Utils.delete_footer(body, @hash['mm-tokidori']['footer-row-count'])
+
     Slack.chat_postMessage(text: body, channel: '#mailmagazine', username: '時鳥')
     
   end

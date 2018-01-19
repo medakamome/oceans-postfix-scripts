@@ -9,6 +9,7 @@ require 'mail'
 require 'slack'
 require 'nkf'
 require 'logger'
+require '/home/postfix/scripts/oceans-postfix-scripts/utils.rb'
 
 class GetMail
  def initialize
@@ -42,14 +43,16 @@ class GetMail
     end
 #=end
 
- #   row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
+    row_body = mail.multipart? ? (mail.text_part ? mail.text_part.decoded : nil) : mail.body.decoded
 
-#    decoded_body = NKF.nkf('-w', row_body)
- #   body = body_to_pobody(decoded_body)
-    body = mail.body.decoded.encode("UTF-8", mail.charset)
+    decoded_body = NKF.nkf('-w', row_body)
+    body = body_to_pobody(decoded_body)
+#    body = mail.body.decoded.encode("UTF-8", mail.charset)
     body = body.sub(/加藤　高正/,"XXX")
     
-    Slack.chat_postMessage(text: body, channel: '#devpost', username: 'にっしー')
+    # フッターの削除
+    body = Utils.delete_footer(body , @hash['mm-nishihara']['footer-row-count'])    
+    Slack.chat_postMessage(text: body, channel: '#slacktest', username: 'にっしー')
     
   end
 
