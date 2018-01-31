@@ -7,10 +7,10 @@ module Utils
     # フッター削除
     #--------------------------------
     def delete_footer(str, footerCount)
+        
         # 行数カウント
-        #totalCount = str.count('\n')
         totalCount = str.scan(/^(.)*$/).size
-        p totalCount
+
         # フッター削除
         result = ''
 
