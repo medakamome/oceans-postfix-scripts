@@ -47,9 +47,11 @@ class GetMail
     body = body_to_pobody(decoded_body)
  #  body = mail.body.decoded.encode("UTF-8", mail.charset)
     body = body.sub(/白土光/,"XXX")
+
+    subject = mail.subject
     
     # フッター削除
-    body = Utils.delete_footer(body, @hash['mm-shima']['footer-row-count'])
+    body = Utils.delete_footer("*#{subject}*\n\n#{body}", @hash['mm-shima']['footer-row-count'])
 
     Slack.chat_postMessage(text: body, channel: '#mailmagazine', username: '志摩力男')
     

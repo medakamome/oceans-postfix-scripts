@@ -62,7 +62,7 @@ class GetMail
   def judge_kapo(subject)
     channel = "#slacktest"
     #4H
-    if (/4H/ =~ subject) then
+    if (/(H4|VQ)/ =~ subject) then
         channel = "#mt4signal_4h"
     #USDJPY
     elsif !(/^(?=.*USD)(?=.*JPY)/ !~ subject) then
